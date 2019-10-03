@@ -5,3 +5,8 @@
 .logo img{
   width: 100px;
 }
+
+.submitVotes,
+.seeResult {
+  margin-top: 10px;
+}
