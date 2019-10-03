@@ -1,0 +1,16 @@
+.logo img{
+    width: 100px;
+}
+
+.information {
+    display: inline-block;
+    text-align: left;
+    width: 500px;
+    border: 1px solid black;
+    padding: 15px;
+}
+
+.information svg.svg-inline--fa {
+    padding-right: 5px;
+    width: 2em;
+}
