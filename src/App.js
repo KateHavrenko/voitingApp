@@ -9,17 +9,14 @@ import AdminPage from './AdminPage';
 function App() {
   return (
     <div className="App">
-      {/* <GreetingPage></GreetingPage> */}
-
       <Router>
-        <div id="page-wrapper">
-          <Switch>
-            <Route path="/" exact component={GreetingPage} />
-            <Route exact path="/voting" component={VotingPage} />
-            <Route exact path="/admin" component={AdminPage} />
-          </Switch>
-        </div>
-    </Router>
+      {/* <GreetingPage></GreetingPage> */}
+        <Switch>
+            <Route exact path="/" component={GreetingPage} />
+            <Route exact path="/admin" component={AdminPage} /> 
+            <Route exact path="/voting" component={VotingPage} /> 
+        </Switch>
+      </Router>
     </div>
   );
 }

@@ -1,9 +1,14 @@
 .App {
   text-align: center;
+  margin: 15px;
 }
 
 .logo img{
   width: 100px;
+}
+
+.thanksMessage {
+  border: 1px solid black;
 }
 
 .submitVotes,

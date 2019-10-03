@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import castle from './castle.png';
 
-export default class VoitingPage extends Component{
+export default class ResultsPage extends Component{
     constructor() {
         super();
     }
