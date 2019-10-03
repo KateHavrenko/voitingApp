@@ -7,15 +7,17 @@ export default class GreetingPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            password: ''
+            password: null,
+            passwordCorrect: null
         }
     }
 
-    checkPassword = (e) => {
+    checkPassword = () => {
+        debugger;
         if (this.state.password === '55ouvre-toi') {
-            console.log('correct password')
+            this.setState({passwordCorrect: true})
         } else {
-            console.log('try again')
+            this.setState({passwordCorrect: false})
         }
     }
 
@@ -24,6 +26,7 @@ export default class GreetingPage extends Component {
     }
      
     render() {
+        console.log('state', this.state.password)
         return (
             <div className='container'>
                 <div className='logo'>
@@ -33,7 +36,7 @@ export default class GreetingPage extends Component {
                 <form className='form text-center'>
                     <div className='offset-md-4 col-md-4'>Enter admin password:</div>
                     <div className='offset-md-4 col-md-4'>
-                        <input className='form-control center-block' value={this.state.password} type='text'/>
+                        <input className='form-control center-block' value={this.state.password} onChange={this.on_Change} type='text'/>
                     </div>
                     <div className='offset-md-4 col-md-4'>
                         <button className='btn btn-danger seeResult' onClick={this.checkPassword} >See results</button>
