@@ -19,8 +19,6 @@ export default class GreetingPage extends Component {
       }
     }
     
-
-
     render() {
         return (
             <Router>
@@ -51,6 +49,8 @@ export default class GreetingPage extends Component {
                             </Link>
                         </div>
                     </div>
+                    <p>Or you can see result of voting if you have the access.</p>
+                    <Link to={'/admin'}><p className='text-center'>Click here</p></Link>
                 </div>
             </Router>
         )
