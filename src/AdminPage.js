@@ -31,7 +31,7 @@ class AdminPage extends PureComponent {
                     <form className='form text-center'>
                         <div className='offset-md-4 col-md-4'>Enter admin password:</div>
                         <div className='offset-md-4 col-md-4'>
-                            <input className='form-control center-block' value={this.state.password} onChange={this.on_Change} type='text' />
+                            <input type='password' className='form-control center-block' value={this.state.password} onChange={this.on_Change}/>
                         </div>
                         <div className='offset-md-4 col-md-4'>
                             <button className='btn btn-danger seeResult' onClick={this.checkPassword} >See results</button>

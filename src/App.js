@@ -20,7 +20,7 @@ function App() {
         {/* <GreetingPage></GreetingPage> */}
         <Switch>
           <Route exact path="/" component={GreetingPage} />
-          <Route exact path="/admin" component={AdminPage} />
+          <Route exact path="/admin-access" component={AdminPage} />
           <Route exact path="/voting" component={VotingPage} />
           <Route exact path="/results" component={ResultsPage} />
           <Route exact path="/thanks" component={ThanksMessage} />

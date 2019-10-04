@@ -1,47 +1,10 @@
 import React, { PureComponent } from 'react';
 import { withRouter } from "react-router-dom";
+import getListPeopleKyiv from './listKyiv';
+import getListPeopleLondon from './listLondon';
 
 
-const listKyiv = [
-    {
-        name: 'Olena Belenko'
-    },
-    {
-        name: 'Stanіslav Gricenko'
-    },
-    {
-        name: 'Oleksii Bondarenko'
-    },
-    {
-        name: 'Pavlo Davidenko'
-    },
-    {
-        name: 'Roman Bublik'
-    },
-    {
-        name: 'Miroslava Vinnichenko'
-    }
-];
-
-const listLondon = [
-    {
-        name: 'Michael Powell'
-    },
-    {
-        name: 'James Carlsen'
-    },
-    {
-        name: 'Heather Schultz'
-    },
-    {
-        name: 'Linda Sims'
-    },
-    {
-        name: 'Faisal Uddin'
-    }
-];
-
-const list = [...listLondon, ...listKyiv];
+const list = [...getListPeopleKyiv(), ...getListPeopleLondon()];
 
 class VoitingPage extends PureComponent{
     constructor(props) {
@@ -55,7 +18,9 @@ class VoitingPage extends PureComponent{
             thirdNomination: '',
             thirdNominationMessage: '',
             errorMessage: false,
-            errorMessageUnique: false
+            errorMessageUnique: false,
+            errorMessageSelectName: false,
+            errorMessageEmpty: false
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleClick = this.handleClick.bind(this);
@@ -63,16 +28,37 @@ class VoitingPage extends PureComponent{
 
     handleClick(event) {
         event.preventDefault();
-        if (this.state.voterPerson === this.state.firstNomination ||
+        if (this.state.firstNomination === '' || 
+            this.state.secondNomination === '' ||
+            this.state.thirdNomination === '') {
+                this.setState({errorMessageSelectName: true})
+        } else if (this.state.voterPerson === this.state.firstNomination ||
             this.state.voterPerson === this.state.secondNomination ||
             this.state.voterPerson === this.state.thirdNomination ) {
-            this.setState({errorMessage: !this.state.errorMessage}) 
+                this.setState({errorMessage: true}) 
         } else if (this.state.firstNomination === this.state.secondNomination || 
             this.state.firstNomination === this.state.thirdNomination ||
             this.state.secondNomination === this.state.thirdNomination) {
-            this.setState({errorMessageUnique: !this.state.errorMessageUnique})
+                this.setState({errorMessageUnique: true})
+        } else if (this.state.firstNominationMessage === '' || 
+            this.state.secondNominationMessage === '' ||
+            this.state.thirdNominationMessage === '') {
+                this.setState({errorMessageEmpty: true})
         } else {
-            let votesData = { ...this.state };
+            const { voterPerson,
+                firstNomination,
+                firstNominationMessage,
+                secondNomination,
+                secondNominationMessage,
+                thirdNomination,
+                thirdNominationMessage} = this.state;
+            let votesData = { voterPerson,
+                firstNomination,
+                firstNominationMessage,
+                secondNomination,
+                secondNominationMessage,
+                thirdNomination,
+                thirdNominationMessage };
             localStorage.setItem(this.state.voterPerson, JSON.stringify(votesData))
             const { history } = this.props;
             history.push('/thanks');
@@ -81,7 +67,6 @@ class VoitingPage extends PureComponent{
 
     handleChange(event) {
         this.setState({ [event.target.name]: event.target.value });
-        // console.log(this.state, 'state')
     }
 
     render() {
@@ -93,7 +78,11 @@ class VoitingPage extends PureComponent{
                         {this.state.errorMessage && <div className='col-md-12 text-center error'>
                             Sorry you can not vote for yourself</div>}
                         {this.state.errorMessageUnique && <div className='col-md-12 text-center error'>
-                            Sorry you should choose another person</div>}
+                            Sorry you can not vote for the same person more than once</div>}
+                        {this.state.errorMessageSelectName && <div className='col-md-12 text-center error'>
+                            Sorry you should choose someone</div>}
+                        {this.state.errorMessageEmpty && <div className='col-md-12 text-center error'>
+                            Sorry you should fill in the message fields</div>}
                     </div>
                     <div className="form-group row">
                         <label className="col-md-5 text-right ">You are:</label>
