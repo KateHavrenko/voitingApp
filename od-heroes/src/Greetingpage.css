@@ -1,11 +1,8 @@
-.logo img{
-    width: 100px;
-}
-
 .information {
     display: inline-block;
     text-align: left;
-    width: 500px;
+    max-width: 500px;
+    width: 100%;
     border: 1px solid black;
     padding: 15px;
 }
