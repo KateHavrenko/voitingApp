@@ -2,7 +2,7 @@ import React from 'react';
 import GreetingPage from './GreetingPage';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { BrowserRouter as Router, Route, Link, Redirect, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import VotingPage from './VotingPage';
 import AdminPage from './AdminPage';
 import ResultsPage from './ResultsPage';

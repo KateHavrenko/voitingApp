@@ -1,5 +1,4 @@
-import React, { Component, PureComponent } from 'react';
-import ThanksMessage from './ThanksMessage.js';
+import React, { PureComponent } from 'react';
 import { withRouter } from "react-router-dom";
 
 
@@ -43,7 +42,6 @@ const listLondon = [
 ];
 
 const list = [...listLondon, ...listKyiv];
-console.log(list);
 
 class VoitingPage extends PureComponent{
     constructor(props) {
@@ -55,7 +53,9 @@ class VoitingPage extends PureComponent{
             secondNomination: '',
             secondNominationMessage: '',
             thirdNomination: '',
-            thirdNominationMessage: ''
+            thirdNominationMessage: '',
+            errorMessage: false,
+            errorMessageUnique: false
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleClick = this.handleClick.bind(this);
@@ -63,11 +63,20 @@ class VoitingPage extends PureComponent{
 
     handleClick(event) {
         event.preventDefault();
-        // this.setState({ [event.target.name]: event.target.value });
-        let votesData = { ...this.state };
-        localStorage.setItem(this.state.voterPerson, JSON.stringify(votesData))
-        const { history } = this.props;
-        history.push('/thanks');
+        if (this.state.voterPerson === this.state.firstNomination ||
+            this.state.voterPerson === this.state.secondNomination ||
+            this.state.voterPerson === this.state.thirdNomination ) {
+            this.setState({errorMessage: !this.state.errorMessage}) 
+        } else if (this.state.firstNomination === this.state.secondNomination || 
+            this.state.firstNomination === this.state.thirdNomination ||
+            this.state.secondNomination === this.state.thirdNomination) {
+            this.setState({errorMessageUnique: !this.state.errorMessageUnique})
+        } else {
+            let votesData = { ...this.state };
+            localStorage.setItem(this.state.voterPerson, JSON.stringify(votesData))
+            const { history } = this.props;
+            history.push('/thanks');
+        }
     }
 
     handleChange(event) {
@@ -80,6 +89,12 @@ class VoitingPage extends PureComponent{
         return (
             <div className='container'>
                 <form className='form'>
+                    <div className='row'>
+                        {this.state.errorMessage && <div className='col-md-12 text-center error'>
+                            Sorry you can not vote for yourself</div>}
+                        {this.state.errorMessageUnique && <div className='col-md-12 text-center error'>
+                            Sorry you should choose another person</div>}
+                    </div>
                     <div className="form-group row">
                         <label className="col-md-5 text-right ">You are:</label>
                         <div className="col-md-4">

@@ -1,8 +1,5 @@
-import React, { Component, PureComponent } from 'react';
-import castle from './castle.png';
-import ResultsPage from './ResultsPage';
+import React, {PureComponent } from 'react';
 import { withRouter } from "react-router-dom";
-import { faConnectdevelop } from '@fortawesome/free-brands-svg-icons';
 
 class AdminPage extends PureComponent {
     constructor(props) {

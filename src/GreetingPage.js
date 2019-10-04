@@ -1,16 +1,12 @@
 import React, { Component } from 'react';
 import './Greetingpage.css'
-import castle from './castle.png';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { fab } from '@fortawesome/free-brands-svg-icons'
-import { faCheckSquare, faCoffee, faArrowCircleRight } from '@fortawesome/free-solid-svg-icons'
+import { faArrowCircleRight } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { BrowserRouter as Router, Route, Link, Redirect, Switch } from "react-router-dom";
-import VotingPage from './VotingPage';
-import AdminPage from './AdminPage';
+import { BrowserRouter as Router, Link} from "react-router-dom";
 
-
-library.add(fab, faCheckSquare, faCoffee, faArrowCircleRight)
+library.add(fab, faArrowCircleRight)
 
 export default class GreetingPage extends Component {
     constructor(props) {
