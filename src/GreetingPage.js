@@ -23,10 +23,6 @@ export default class GreetingPage extends Component {
     render() {
         return (
             <div>
-                <div className='logo'>
-                    <img src={castle} alt='castle' />
-                    <h1>September Heroes</h1>
-                </div>
                 <div className='information'>
                     <p>A OneDome Hero is someone who delivers exceptional perfomance.
                         Examples of execptional perfomance could be:
@@ -50,7 +46,7 @@ export default class GreetingPage extends Component {
                     </div>
                 </div>
                 <p>Or you can see result of voting if you have the access.</p>
-                <Link to={'/admin'}><p className='text-center'>Click here</p></Link>
+                <Link to='/admin'><p className='text-center'>Click here</p></Link>
             </div>
         )
     }

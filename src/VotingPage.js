@@ -1,9 +1,6 @@
-import React, { Component } from 'react';
+import React, { Component, PureComponent } from 'react';
 import ThanksMessage from './ThanksMessage.js';
-import createHistory from 'history/createBrowserHistory';
-import { BrowserRouter as Router, Route, Link, Redirect, Switch } from "react-router-dom";
-import castle from './castle.png';
-
+import { withRouter } from "react-router-dom";
 
 
 const listKyiv = [
@@ -48,11 +45,11 @@ const listLondon = [
 const list = [...listLondon, ...listKyiv];
 console.log(list);
 
-export default class VoitingPage extends Component {
+class VoitingPage extends PureComponent{
     constructor(props) {
         super(props);
         this.state = {
-            votingPerson: '',
+            voterPerson: '',
             firstNomination: '',
             firstNominationMessage: '',
             secondNomination: '',
@@ -67,9 +64,9 @@ export default class VoitingPage extends Component {
     handleClick(event) {
         event.preventDefault();
         // this.setState({ [event.target.name]: event.target.value });
-        localStorage.setItem(this.state.votingPerson, this.state.firstNomination)
-        console.log(this.state, 'state')
-        const history = createHistory();
+        let votesData = { ...this.state };
+        localStorage.setItem(this.state.voterPerson, JSON.stringify(votesData))
+        const { history } = this.props;
         history.push('/thanks');
     }
 
@@ -81,81 +78,77 @@ export default class VoitingPage extends Component {
     render() {
         const options = list.map((person, index) => <option>{person.name}</option>);
         return (
-            <Router>
-                <div className='container'>
-                    <div className='logo'>
-                        <img src={castle} alt='castle' />
-                        <h1>September Heroes</h1>
+            <div className='container'>
+                <form className='form'>
+                    <div className="form-group row">
+                        <label className="col-md-5 text-right ">You are:</label>
+                        <div className="col-md-4">
+                            <div className="input-group">
+                                <select className="form-control" name="voterPerson"
+                                    onChange={this.handleChange}>
+                                    <option value=''>Select name</option>
+                                    {options}
+                                </select>
+                            </div>
+                        </div>
                     </div>
-                    <form className='form'>
-                        <div className="form-group row">
-                            <label className="col-md-5 text-right ">You are:</label>
-                            <div className="col-md-4">
-                                <div className="input-group">
-                                    <select className="form-control" name="votingPerson"
-                                        onChange={this.handleChange}>
-                                        <option value=''>Select name</option>
-                                        {options}
-                                    </select>
-                                </div>
+                    <div className="form-group row">
+                        <label className="col-md-5 text-right">Who is your first nomination:</label>
+                        <div className="col-md-4">
+                            <select className="form-control" name="firstNomination" onChange={this.handleChange} value={this.state.firstNomination}>
+                                <option value=''>Select name</option>
+                                {options}
+                            </select>
+                        </div>
+                    </div>
+                    <div className="form-group row">
+                        <label className="col-md-5 text-right ">Why you are nominating them:</label>
+                        <div className="col-md-4">
+                            <div className="input-group">
+                                <textarea className="form-control" name="firstNominationMessage" onChange={this.handleChange}></textarea>
                             </div>
                         </div>
-                        <div className="form-group row">
-                            <label className="col-md-5 text-right">Who is your first nomination:</label>
-                            <div className="col-md-4">
-                                <select className="form-control" name="firstNomination" onChange={this.handleChange} value={this.state.firstNomination}>
-                                    <option value=''>Select name</option>
-                                    {options}
-                                </select>
+                    </div>
+                    <div className="form-group row">
+                        <label className="col-md-5 text-right">Who is your second nomination:</label>
+                        <div className="col-md-4">
+                            <select className="form-control" name="secondNomination" onChange={this.handleChange}>
+                                <option value=''>Select name</option>
+                                {options}
+                            </select>
+                        </div>
+                    </div>
+                    <div className="form-group row">
+                        <label className="col-md-5 text-right ">Why you are nominating them:</label>
+                        <div className="col-md-4">
+                            <div className="input-group">
+                                <textarea className="form-control" name="secondNominationMessage" onChange={this.handleChange}></textarea>
                             </div>
                         </div>
-                        <div className="form-group row">
-                            <label className="col-md-5 text-right ">Why you are nominating them:</label>
-                            <div className="col-md-4">
-                                <div className="input-group">
-                                    <textarea className="form-control" name="firstNominationMessage" onChange={this.handleChange}></textarea>
-                                </div>
+                    </div>
+                    <div className="form-group row">
+                        <label className="col-md-5 text-right">Who is your third nomination:</label>
+                        <div className="col-md-4">
+                            <select className="form-control" name="thirdNomination" onChange={this.handleChange}>
+                                <option value=''>Select name</option>
+                                {options}
+                            </select>
+                        </div>
+                    </div>
+                    <div className="form-group row">
+                        <label className="col-md-5 text-right ">Why you are nominating them:</label>
+                        <div className="col-md-4">
+                            <div className="input-group">
+                                <textarea className="form-control" name="thirdNominationMessage" onChange={this.handleChange}></textarea>
                             </div>
                         </div>
-                        <div className="form-group row">
-                            <label className="col-md-5 text-right">Who is your second nomination:</label>
-                            <div className="col-md-4">
-                                <select className="form-control" name="secondNomination" onChange={this.handleChange}>
-                                    <option value=''>Select name</option>
-                                    {options}
-                                </select>
-                            </div>
-                        </div>
-                        <div className="form-group row">
-                            <label className="col-md-5 text-right ">Why you are nominating them:</label>
-                            <div className="col-md-4">
-                                <div className="input-group">
-                                    <textarea className="form-control" name="secondNominationMessage" onChange={this.handleChange}></textarea>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="form-group row">
-                            <label className="col-md-5 text-right">Who is your third nomination:</label>
-                            <div className="col-md-4">
-                                <select className="form-control" name="thirdNomination" onChange={this.handleChange}>
-                                    <option value=''>Select name</option>
-                                    {options}
-                                </select>
-                            </div>
-                        </div>
-                        <div className="form-group row">
-                            <label className="col-md-5 text-right ">Why you are nominating them:</label>
-                            <div className="col-md-4">
-                                <div className="input-group">
-                                    <textarea className="form-control" name="thirdNominationMessage" onChange={this.handleChange}></textarea>
-                                </div>
-                            </div>
-                        </div>
-                        <button className='btn btn-primary submitVotes' onClick={this.handleClick}>Submit your votes</button>
-                    </form>
-                </div>
-                 <Route exact path="/thanks" component={ThanksMessage} /> 
-            </Router>
+                    </div>
+                    <button className='btn btn-primary submitVotes' onClick={this.handleClick}>Submit your votes</button>
+                </form>
+            </div>
         );
     }
 }
+
+
+export default withRouter(VoitingPage);

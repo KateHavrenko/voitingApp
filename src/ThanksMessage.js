@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import castle from './castle.png';
 
 export default class ThanksMessage extends Component {
     render() {
