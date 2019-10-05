@@ -3,7 +3,6 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import { fab } from '@fortawesome/free-brands-svg-icons';
 import { faArrowCircleRight, faTrophy } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { pseudoRandomBytes } from 'crypto';
 import getListPeopleKyiv from './listKyiv';
 import getListPeopleLondon from './listLondon';
 
@@ -17,7 +16,9 @@ export default class ResultsPage extends Component {
             winPersonLondon: '',
             winPersonKyiv: '',
             winMsgLondon: [],
-            winMsgKyiv: []
+            winMsgKyiv: [],
+            winMsgWritersKyiv: [],
+            winMsgWritersLondon: []
         }
     }
 
@@ -33,7 +34,10 @@ export default class ResultsPage extends Component {
         let winnerKyiv = this.getWinner(kyivNom);
         this.setState({ winMsgLondon: this.findWinnerMessages(winnerLondon) });
         this.setState({ winMsgKyiv: this.findWinnerMessages(winnerKyiv) });
-        console.log(this.state.winMsgKyiv, 'Smsg')
+        this.setState({ winMsgWritersLondon: this.findWinnerMessagesWriter(winnerLondon) });
+        this.setState({ winMsgWritersKyiv: this.findWinnerMessagesWriter(winnerKyiv) });
+        console.log(this.state.winMsgKyiv, 'Wmsg111-state')
+        console.log(this.findWinnerMessagesWriter(winnerLondon), 'Wmsg22')
     }
 
     getNominations() {
@@ -85,7 +89,6 @@ export default class ResultsPage extends Component {
     findWinnerMessages(winner) {
         let storage = [];
         let storageMessage = [];
-        let objectStorage = {};
         for (let i = 0; i < localStorage.length; i++) {
             storage.push(JSON.parse(localStorage.getItem(localStorage.key(i))));
         }
@@ -101,6 +104,24 @@ export default class ResultsPage extends Component {
         return storageMessage;
     }
 
+    findWinnerMessagesWriter(winner) {
+        let storage = [];
+        let storageMessageWriters = [];
+        for (let i = 0; i < localStorage.length; i++) {
+            storage.push(JSON.parse(localStorage.getItem(localStorage.key(i))));
+        }
+        for (let item in storage) {
+            if (storage[item].firstNomination === winner) {
+                storageMessageWriters.push(storage[item].voterPerson)
+            } else if (storage[item].secondNomination === winner) {
+                storageMessageWriters.push(storage[item].voterPerson)
+            } else if (storage[item].thirdNomination === winner) {
+                storageMessageWriters.push(storage[item].voterPerson)
+            }
+        }
+        return storageMessageWriters;
+    }
+
 
     render() {
         return (
@@ -109,20 +130,26 @@ export default class ResultsPage extends Component {
                     <FontAwesomeIcon icon="trophy" size='6x' />
                     <p className='isHero'>Kyiv Hero is:</p>
                     <p className='nameWinner'>{this.state.winPersonKyiv}</p>
-                    {this.state.winMsgKyiv.map(msg => {
-                           return <li>{msg}</li>
+                    <div className='winnerMsg'>
+                        {this.state.winMsgKyiv.map((msg, index) => {
+                            return <p className='msg'> {msg} -
+                                <span className='writer'>{this.state.winMsgWritersKyiv[index]}</span>
+                            </p>
                         })}
+                    </div>
                     <p>{!this.state.winPersonKyiv && 'Sorry no winners in this group'}</p>
                 </div>
                 <div className='londonHero col-md-6'>
                     <FontAwesomeIcon icon="trophy" size='6x' />
                     <p className='isHero'>London Hero is:</p>
                     <p className='nameWinner'>{this.state.winPersonLondon}</p>
-                    <ul>
-                        {this.state.winMsgLondon.map(msg => {
-                           return <li>{msg}</li>
+                    <div className='winnerMsg'>
+                        {this.state.winMsgLondon.map((msg, index) => {
+                            return <p className='msg'> {msg} -
+                                <span className='writer'>{this.state.winMsgWritersLondon[index]}</span>
+                            </p>
                         })}
-                    </ul>
+                    </div>
                     <p>{!this.state.winPersonLondon && 'Sorry no winners in this group'}</p>
                 </div>
             </div>
