@@ -10,12 +10,14 @@ import getListPeopleLondon from './listLondon';
 
 library.add(fab, faTrophy);
 
-export default class ResultsPage extends Component{
+export default class ResultsPage extends Component {
     constructor() {
         super();
         this.state = {
-            winPersonLondon: '', 
-            winPersonKyiv: ''
+            winPersonLondon: '',
+            winPersonKyiv: '',
+            winMsgLondon: [],
+            winMsgKyiv: []
         }
     }
 
@@ -25,18 +27,23 @@ export default class ResultsPage extends Component{
 
     componentDidMount() {
         const [londonNom, kyivNom] = this.findNominants();
-        this.setState({winPersonKyiv: this.getWinner(kyivNom)});
-        this.setState({winPersonLondon: this.getWinner(londonNom)});
+        this.setState({ winPersonKyiv: this.getWinner(kyivNom) });
+        this.setState({ winPersonLondon: this.getWinner(londonNom) });
+        let winnerLondon = this.getWinner(londonNom);
+        let winnerKyiv = this.getWinner(kyivNom);
+        this.setState({ winMsgLondon: this.findWinnerMessages(winnerLondon) });
+        this.setState({ winMsgKyiv: this.findWinnerMessages(winnerKyiv) });
+        console.log(this.state.winMsgKyiv, 'Smsg')
     }
-    
+
     getNominations() {
         let storage = [];
-        for (var i =0; i < localStorage.length; i++){
+        for (let i = 0; i < localStorage.length; i++) {
             storage.push(JSON.parse(localStorage.getItem(localStorage.key(i))));
         }
         let nominations = [];
         for (let person in storage) {
-            nominations.push(storage[person].firstNomination, 
+            nominations.push(storage[person].firstNomination,
                 storage[person].secondNomination,
                 storage[person].thirdNomination)
         }
@@ -62,17 +69,36 @@ export default class ResultsPage extends Component{
     getWinner(nominations) {
         let winPerson = {};
         for (let person in nominations) {
-            if (winPerson[nominations[person]] === undefined ) {
+            if (winPerson[nominations[person]] === undefined) {
                 winPerson[nominations[person]] = 0;
             }
             if (nominations.indexOf(nominations[person]) >= 0) {
                 winPerson[nominations[person]] += 1;
             }
         }
-        winPerson = Object.keys(winPerson).sort(function( a, b ) { 
+        winPerson = Object.keys(winPerson).sort(function (a, b) {
             return winPerson[b] - winPerson[a]
         });
         return winPerson[0];
+    }
+
+    findWinnerMessages(winner) {
+        let storage = [];
+        let storageMessage = [];
+        let objectStorage = {};
+        for (let i = 0; i < localStorage.length; i++) {
+            storage.push(JSON.parse(localStorage.getItem(localStorage.key(i))));
+        }
+        for (let item in storage) {
+            if (storage[item].firstNomination === winner) {
+                storageMessage.push(storage[item].firstNominationMessage)
+            } else if (storage[item].secondNomination === winner) {
+                storageMessage.push(storage[item].secondNominationMessage)
+            } else if (storage[item].thirdNomination === winner) {
+                storageMessage.push(storage[item].thirdNominationMessage)
+            }
+        }
+        return storageMessage;
     }
 
 
@@ -80,15 +106,23 @@ export default class ResultsPage extends Component{
         return (
             <div className='row'>
                 <div className='kyivHero col-md-6'>
-                    <FontAwesomeIcon icon="trophy" size='6x'/>
+                    <FontAwesomeIcon icon="trophy" size='6x' />
                     <p className='isHero'>Kyiv Hero is:</p>
                     <p className='nameWinner'>{this.state.winPersonKyiv}</p>
+                    {this.state.winMsgKyiv.map(msg => {
+                           return <li>{msg}</li>
+                        })}
                     <p>{!this.state.winPersonKyiv && 'Sorry no winners in this group'}</p>
                 </div>
                 <div className='londonHero col-md-6'>
                     <FontAwesomeIcon icon="trophy" size='6x' />
                     <p className='isHero'>London Hero is:</p>
                     <p className='nameWinner'>{this.state.winPersonLondon}</p>
+                    <ul>
+                        {this.state.winMsgLondon.map(msg => {
+                           return <li>{msg}</li>
+                        })}
+                    </ul>
                     <p>{!this.state.winPersonLondon && 'Sorry no winners in this group'}</p>
                 </div>
             </div>
