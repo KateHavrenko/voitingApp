@@ -44,3 +44,12 @@
   margin-top: 10px;
 }
 
+.error {
+  color: red;
+  transition: all;
+}
+
+.errorMsg {
+  height: 30px;
+}
+

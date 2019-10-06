@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fab } from '@fortawesome/free-brands-svg-icons';
-import { faArrowCircleRight, faTrophy } from '@fortawesome/free-solid-svg-icons';
+import { faTrophy } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import getListPeopleKyiv from './listKyiv';
 import getListPeopleLondon from './listLondon';
@@ -36,8 +36,6 @@ export default class ResultsPage extends Component {
         this.setState({ winMsgKyiv: this.findWinnerMessages(winnerKyiv) });
         this.setState({ winMsgWritersLondon: this.findWinnerMessagesWriter(winnerLondon) });
         this.setState({ winMsgWritersKyiv: this.findWinnerMessagesWriter(winnerKyiv) });
-        console.log(this.state.winMsgKyiv, 'Wmsg111-state')
-        console.log(this.findWinnerMessagesWriter(winnerLondon), 'Wmsg22')
     }
 
     getNominations() {
@@ -132,7 +130,7 @@ export default class ResultsPage extends Component {
                     <p className='nameWinner'>{this.state.winPersonKyiv}</p>
                     <div className='winnerMsg'>
                         {this.state.winMsgKyiv.map((msg, index) => {
-                            return <p className='msg'> {msg} -
+                            return <p className='msg' key={index}> {msg} -
                                 <span className='writer'>{this.state.winMsgWritersKyiv[index]}</span>
                             </p>
                         })}
@@ -145,7 +143,7 @@ export default class ResultsPage extends Component {
                     <p className='nameWinner'>{this.state.winPersonLondon}</p>
                     <div className='winnerMsg'>
                         {this.state.winMsgLondon.map((msg, index) => {
-                            return <p className='msg'> {msg} -
+                            return <p className='msg' key={index}> {msg} -
                                 <span className='writer'>{this.state.winMsgWritersLondon[index]}</span>
                             </p>
                         })}

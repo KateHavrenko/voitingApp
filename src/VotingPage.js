@@ -6,7 +6,7 @@ import getListPeopleLondon from './listLondon';
 
 const list = [...getListPeopleKyiv(), ...getListPeopleLondon()];
 
-class VoitingPage extends PureComponent{
+class VoitingPage extends PureComponent {
     constructor(props) {
         super(props);
         this.state = {
@@ -17,12 +17,12 @@ class VoitingPage extends PureComponent{
             secondNominationMessage: '',
             thirdNomination: '',
             thirdNominationMessage: '',
-            errorMessage: false,
+            errorMessageYourself: false,
             errorMessageUnique: false,
             errorMessageSelectName: false,
             errorMessageEmpty: false,
             errorVoterPerson: false
-            
+
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleClick = this.handleClick.bind(this);
@@ -30,12 +30,11 @@ class VoitingPage extends PureComponent{
 
     componentDidMount() {
         this.checkVotedPersons();
-        console.log(this.checkVotedPersons())
     }
 
     getVoters() {
         let storage = [];
-        for (var i =0; i < localStorage.length; i++){
+        for (var i = 0; i < localStorage.length; i++) {
             storage.push(JSON.parse(localStorage.getItem(localStorage.key(i))));
         }
         let voters = [];
@@ -47,33 +46,47 @@ class VoitingPage extends PureComponent{
 
     checkVotedPersons() {
         let voters = this.getVoters();
-        console.log(voters);
         if (voters.indexOf(this.state.voterPerson) >= 0) {
-            this.setState({errorVoterPerson: true})
-        } 
+            this.setState({ errorVoterPerson: true })
+        }
     }
 
     handleClick(event) {
         event.preventDefault();
         let voters = this.getVoters();
-        if (this.state.firstNomination === '' || 
+        if (this.state.firstNomination === '' ||
             this.state.secondNomination === '' ||
             this.state.thirdNomination === '') {
-                this.setState({errorMessageSelectName: true})
+            this.setState({ errorMessageSelectName: true })
+            setTimeout(() => {
+                this.setState({ errorMessageSelectName: false })
+            }, 3000);
         } else if (this.state.voterPerson === this.state.firstNomination ||
             this.state.voterPerson === this.state.secondNomination ||
-            this.state.voterPerson === this.state.thirdNomination ) {
-                this.setState({errorMessage: true}) 
-        } else if (this.state.firstNomination === this.state.secondNomination || 
+            this.state.voterPerson === this.state.thirdNomination) {
+            this.setState({ errorMessageYourself: true })
+            setTimeout(() => {
+                this.setState({ errorMessageYourself: false })
+            }, 3000);
+        } else if (this.state.firstNomination === this.state.secondNomination ||
             this.state.firstNomination === this.state.thirdNomination ||
             this.state.secondNomination === this.state.thirdNomination) {
-                this.setState({errorMessageUnique: true})
-        } else if (this.state.firstNominationMessage === '' || 
+            this.setState({ errorMessageUnique: true })
+            setTimeout(() => {
+                this.setState({ errorMessageUnique: false })
+            }, 3000);
+        } else if (this.state.firstNominationMessage === '' ||
             this.state.secondNominationMessage === '' ||
             this.state.thirdNominationMessage === '') {
-                this.setState({errorMessageEmpty: true})
-        } else if (voters.indexOf(this.state.voterPerson) >= 0 ) {
-            this.setState({errorVoterPerson: true})
+            this.setState({ errorMessageEmpty: true })
+            setTimeout(() => {
+                this.setState({ errorMessageEmpty: false })
+            }, 3000);
+        } else if (voters.indexOf(this.state.voterPerson) >= 0) {
+            this.setState({ errorVoterPerson: true })
+            setTimeout(() => {
+                this.setState({ errorVoterPerson: false })
+            }, 3000);
         } else {
             const { voterPerson,
                 firstNomination,
@@ -81,19 +94,22 @@ class VoitingPage extends PureComponent{
                 secondNomination,
                 secondNominationMessage,
                 thirdNomination,
-                thirdNominationMessage} = this.state;
-            let votesData = { voterPerson,
+                thirdNominationMessage } = this.state;
+            let votesData = {
+                voterPerson,
                 firstNomination,
                 firstNominationMessage,
                 secondNomination,
                 secondNominationMessage,
                 thirdNomination,
-                thirdNominationMessage };
+                thirdNominationMessage
+            };
             localStorage.setItem(this.state.voterPerson, JSON.stringify(votesData))
             const { history } = this.props;
             history.push('/thanks');
         }
     }
+
 
     handleChange(event) {
         this.setState({ [event.target.name]: event.target.value });
@@ -104,8 +120,8 @@ class VoitingPage extends PureComponent{
         return (
             <div className='container'>
                 <form className='form'>
-                    <div className='row'>
-                        {this.state.errorMessage && <div className='col-md-12 text-center error'>
+                    <div className='row errorMsg'>
+                        {this.state.errorMessageYourself && <div className='col-md-12 text-center error'>
                             Sorry you can not vote for yourself</div>}
                         {this.state.errorMessageUnique && <div className='col-md-12 text-center error'>
                             Sorry you can not vote for the same person more than once</div>}

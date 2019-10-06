@@ -30,7 +30,7 @@ export default class GreetingPage extends Component {
                         <li>Smashing to a target</li>
                     </ul>
                     <p>We aim to have a Hero for each office, however you can use your votes to
-                        nominate someone from eiher office.
+                        nominate someone from either office.
                         </p>
                     <div className='text-center'>
                         <Link to='/voting'>
