@@ -5,11 +5,11 @@ import { faTrophy } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import getListPeopleKyiv from './listKyiv';
 import getListPeopleLondon from './listLondon';
-
+import { connect } from 'react-redux'
 
 library.add(fab, faTrophy);
 
-export default class ResultsPage extends Component {
+class ResultsPage extends Component {
     constructor() {
         super();
         this.state = {
@@ -40,8 +40,8 @@ export default class ResultsPage extends Component {
 
     getNominations() {
         let storage = [];
-        for (let i = 0; i < localStorage.length; i++) {
-            storage.push(JSON.parse(localStorage.getItem(localStorage.key(i))));
+        for (let i = 0; i < this.props.items.length; i++) {
+            storage.push(this.props.items[i]);
         }
         let nominations = [];
         for (let person in storage) {
@@ -87,8 +87,8 @@ export default class ResultsPage extends Component {
     findWinnerMessages(winner) {
         let storage = [];
         let storageMessage = [];
-        for (let i = 0; i < localStorage.length; i++) {
-            storage.push(JSON.parse(localStorage.getItem(localStorage.key(i))));
+        for (let i = 0; i < this.props.items.length; i++) {
+            storage.push(this.props.items[i]);
         }
         for (let item in storage) {
             if (storage[item].firstNomination === winner) {
@@ -105,8 +105,8 @@ export default class ResultsPage extends Component {
     findWinnerMessagesWriter(winner) {
         let storage = [];
         let storageMessageWriters = [];
-        for (let i = 0; i < localStorage.length; i++) {
-            storage.push(JSON.parse(localStorage.getItem(localStorage.key(i))));
+        for (let i = 0; i < this.props.items.length; i++) {
+            storage.push(this.props.items[i]);
         }
         for (let item in storage) {
             if (storage[item].firstNomination === winner) {
@@ -122,8 +122,13 @@ export default class ResultsPage extends Component {
 
 
     render() {
+        debugger;
+        console.log("!!!", this.props.items);
         return (
             <div className='row'>
+                {/* {this.props.items && this.props.items.map((i) => {
+                    return <div>{i.firstNomination}</div>
+                })} */}
                 <div className='kyivHero col-md-6'>
                     <FontAwesomeIcon icon="trophy" size='6x' />
                     <p className='isHero'>Kyiv Hero is:</p>
@@ -154,3 +159,10 @@ export default class ResultsPage extends Component {
         )
     }
 }
+
+const mapStateToProps = (state) => {
+    return {items: state};
+}
+
+// export default withRouter(VoitingPage);
+export default connect(mapStateToProps)(ResultsPage);
