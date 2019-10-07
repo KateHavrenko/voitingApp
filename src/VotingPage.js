@@ -8,7 +8,6 @@ import { connect } from 'react-redux';
 
 const list = [...getListPeopleKyiv(), ...getListPeopleLondon()];
 
-
 class VoitingPage extends PureComponent {
     constructor(props) {
         super(props);
@@ -23,7 +22,7 @@ class VoitingPage extends PureComponent {
             errorMessageYourself: false,
             errorMessageUnique: false,
             errorMessageSelectName: false,
-            errorMessageEmpty: false,
+            errorMessageEmpty: false,""
             errorVoterPerson: false
 
         };
@@ -37,8 +36,8 @@ class VoitingPage extends PureComponent {
 
     getVoters() {
         let storage = [];
-        for (var i = 0; i < localStorage.length; i++) {
-            storage.push(JSON.parse(localStorage.getItem(localStorage.key(i))));
+        for (let i = 0; i < this.props.items.length; i++) {
+            storage.push(this.props.items[i]);
         }
         let voters = [];
         for (let person in storage) {
@@ -64,32 +63,32 @@ class VoitingPage extends PureComponent {
             setTimeout(() => {
                 this.setState({ errorMessageSelectName: false })
             }, 3000);
-        // } else if (this.state.voterPerson === this.state.firstNomination ||
-        //     this.state.voterPerson === this.state.secondNomination ||
-        //     this.state.voterPerson === this.state.thirdNomination) {
-        //     this.setState({ errorMessageYourself: true })
-        //     setTimeout(() => {
-        //         this.setState({ errorMessageYourself: false })
-        //     }, 3000);
-        // } else if (this.state.firstNomination === this.state.secondNomination ||
-        //     this.state.firstNomination === this.state.thirdNomination ||
-        //     this.state.secondNomination === this.state.thirdNomination) {
-        //     this.setState({ errorMessageUnique: true })
-        //     setTimeout(() => {
-        //         this.setState({ errorMessageUnique: false })
-        //     }, 3000);
-        // } else if (this.state.firstNominationMessage === '' ||
-        //     this.state.secondNominationMessage === '' ||
-        //     this.state.thirdNominationMessage === '') {
-        //     this.setState({ errorMessageEmpty: true })
-        //     setTimeout(() => {
-        //         this.setState({ errorMessageEmpty: false })
-        //     }, 3000);
-        // } else if (voters.indexOf(this.state.voterPerson) >= 0) {
-        //     this.setState({ errorVoterPerson: true })
-        //     setTimeout(() => {
-        //         this.setState({ errorVoterPerson: false })
-        //     }, 3000);
+        } else if (this.state.voterPerson === this.state.firstNomination ||
+            this.state.voterPerson === this.state.secondNomination ||
+            this.state.voterPerson === this.state.thirdNomination) {
+            this.setState({ errorMessageYourself: true })
+            setTimeout(() => {
+                this.setState({ errorMessageYourself: false })
+            }, 3000);
+        } else if (this.state.firstNomination === this.state.secondNomination ||
+            this.state.firstNomination === this.state.thirdNomination ||
+            this.state.secondNomination === this.state.thirdNomination) {
+            this.setState({ errorMessageUnique: true })
+            setTimeout(() => {
+                this.setState({ errorMessageUnique: false })
+            }, 3000);
+        } else if (this.state.firstNominationMessage === '' ||
+            this.state.secondNominationMessage === '' ||
+            this.state.thirdNominationMessage === '') {
+            this.setState({ errorMessageEmpty: true })
+            setTimeout(() => {
+                this.setState({ errorMessageEmpty: false })
+            }, 3000);
+        } else if (voters.indexOf(this.state.voterPerson) >= 0) {
+            this.setState({ errorVoterPerson: true })
+            setTimeout(() => {
+                this.setState({ errorVoterPerson: false })
+            }, 3000);
         } else {
             const { voterPerson,
                 firstNomination,
@@ -108,10 +107,9 @@ class VoitingPage extends PureComponent {
                 thirdNominationMessage
             };
             this.props.dispatch({
-                type: "ADD_NOMINATION", 
+                type: "ADD_NOMINATION",
                 votesData: votesData
             });
-            // localStorage.setItem(this.state.voterPerson, JSON.stringify(votesData))
             const { history } = this.props;
             history.push('/thanks');
         }
@@ -210,7 +208,7 @@ class VoitingPage extends PureComponent {
 }
 
 const mapStateToProps = (state) => {
-    return {items: state};
+    return { items: state };
 }
 
 // export default withRouter(VoitingPage);

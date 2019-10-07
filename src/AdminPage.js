@@ -1,4 +1,4 @@
-import React, {PureComponent } from 'react';
+import React, { PureComponent } from 'react';
 import { withRouter } from "react-router-dom";
 
 class AdminPage extends PureComponent {
@@ -14,7 +14,7 @@ class AdminPage extends PureComponent {
     checkPassword = (e) => {
         e.preventDefault();
         this.setState({ showMessage: !this.state.showMessage });
-        if (this.state.password === '123') {
+        if (this.state.password === '55ouvre-toi') {
             this.setState({ passwordCorrect: true });
             const { history } = this.props;
             history.push('/results');
@@ -27,19 +27,19 @@ class AdminPage extends PureComponent {
 
     render() {
         return (
-                <div className='container'>
-                    <form className='form text-center'>
-                        <div className='offset-md-4 col-md-4'>Enter admin password:</div>
-                        <div className='offset-md-4 col-md-4'>
-                            <input type='password' className='form-control center-block' value={this.state.password} onChange={this.on_Change}/>
-                        </div>
-                        <div className='offset-md-4 col-md-4'>
-                            <button className='btn btn-danger seeResult' onClick={this.checkPassword} >See results</button>
-                        </div>
-                    </form>
-                    {this.state.showMessage && !this.state.passwordCorrect &&
-                    <div>Sorry password not correct</div> }
-                </div>
+            <div className='container'>
+                <form className='form text-center'>
+                    <div className='offset-md-4 col-md-4'>Enter admin password:</div>
+                    <div className='offset-md-4 col-md-4'>
+                        <input type='password' className='form-control center-block' value={this.state.password} onChange={this.on_Change} />
+                    </div>
+                    <div className='offset-md-4 col-md-4'>
+                        <button className='btn btn-danger seeResult' onClick={this.checkPassword} >See results</button>
+                    </div>
+                </form>
+                {this.state.showMessage && !this.state.passwordCorrect &&
+                    <div className='error'>Sorry password not correct</div>}
+            </div>
         )
     }
 

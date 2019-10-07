@@ -7,7 +7,7 @@ import VotingPage from './VotingPage';
 import AdminPage from './AdminPage';
 import ResultsPage from './ResultsPage';
 import ThanksMessage from './ThanksMessage';
-import castle from './castle.png';
+import castle from './images/castle.png';
 
 function App() {
   return (

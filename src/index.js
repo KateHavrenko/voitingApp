@@ -9,7 +9,6 @@ import { Provider } from 'react-redux';
   
 const store = createStore(voting, JSON.parse(localStorage.getItem('state')) || []);
 store.subscribe(() => localStorage.setItem('state', JSON.stringify(store.getState())));
-store.subscribe(() => console.log(store.getState(), 'subscribe'));
 
 ReactDOM.render(
     <Provider store={store}>

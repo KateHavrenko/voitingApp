@@ -120,15 +120,9 @@ class ResultsPage extends Component {
         return storageMessageWriters;
     }
 
-
     render() {
-        debugger;
-        console.log("!!!", this.props.items);
         return (
             <div className='row'>
-                {/* {this.props.items && this.props.items.map((i) => {
-                    return <div>{i.firstNomination}</div>
-                })} */}
                 <div className='kyivHero col-md-6'>
                     <FontAwesomeIcon icon="trophy" size='6x' />
                     <p className='isHero'>Kyiv Hero is:</p>
@@ -161,8 +155,7 @@ class ResultsPage extends Component {
 }
 
 const mapStateToProps = (state) => {
-    return {items: state};
+    return { items: state };
 }
 
-// export default withRouter(VoitingPage);
 export default connect(mapStateToProps)(ResultsPage);

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import './Greetingpage.css'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { fab } from '@fortawesome/free-brands-svg-icons'
 import { faArrowCircleRight } from '@fortawesome/free-solid-svg-icons'
