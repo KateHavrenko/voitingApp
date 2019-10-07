@@ -22,7 +22,7 @@ class VoitingPage extends PureComponent {
             errorMessageYourself: false,
             errorMessageUnique: false,
             errorMessageSelectName: false,
-            errorMessageEmpty: false,""
+            errorMessageEmpty: false,
             errorVoterPerson: false
 
         };
