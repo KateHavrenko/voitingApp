@@ -2,22 +2,22 @@
 export default function getListPeopleKyiv() {
     return [
         {
-            name: 'Olena Belenko'
+            name: 'Maryna Viazovska'
         },
         {
-            name: 'Stanіslav Gricenko'
+            name: 'Gersh Budker'
         },
         {
-            name: 'Oleksii Bondarenko'
+            name: 'Lubomyr Luciuk'
         },
         {
-            name: 'Pavlo Davidenko'
+            name: 'Trofim Lysenko'
         },
         {
-            name: 'Roman Bublik'
+            name: 'Ivan Horbachevsky'
         },
         {
-            name: 'Miroslava Vinnichenko'
+            name: 'Borys Paton'
         }
     ];
 } 

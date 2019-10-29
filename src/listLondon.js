@@ -1,19 +1,19 @@
 export default function getListPeopleLondon() {
     return [
     {
-        name: 'Michael Powell'
+        name: 'John Peel'
     },
     {
-        name: 'James Carlsen'
+        name: 'Robert Falcon Scott'
     },
     {
-        name: 'Heather Schultz'
+        name: 'James Connolly'
     },
     {
-        name: 'Linda Sims'
+        name: 'John Lydon'
     },
     {
-        name: 'Faisal Uddin'
+        name: 'Richard Burton'
     }
 ];
 }
