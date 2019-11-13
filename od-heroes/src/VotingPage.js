@@ -1,51 +1,14 @@
-import React, { Component, PureComponent } from 'react';
-import ThanksMessage from './ThanksMessage.js';
+import React, { PureComponent } from 'react';
 import { withRouter } from "react-router-dom";
+import getListPeopleKyiv from './listKyiv';
+import getListPeopleLondon from './listLondon';
+import { createStore } from 'redux';
+import { connect } from 'react-redux';
 
 
-const listKyiv = [
-    {
-        name: 'Olena Belenko'
-    },
-    {
-        name: 'Stanіslav Gricenko'
-    },
-    {
-        name: 'Oleksii Bondarenko'
-    },
-    {
-        name: 'Pavlo Davidenko'
-    },
-    {
-        name: 'Roman Bublik'
-    },
-    {
-        name: 'Miroslava Vinnichenko'
-    }
-];
+const list = [...getListPeopleKyiv(), ...getListPeopleLondon()];
 
-const listLondon = [
-    {
-        name: 'Michael Powell'
-    },
-    {
-        name: 'James Carlsen'
-    },
-    {
-        name: 'Heather Schultz'
-    },
-    {
-        name: 'Linda Sims'
-    },
-    {
-        name: 'Faisal Uddin'
-    }
-];
-
-const list = [...listLondon, ...listKyiv];
-console.log(list);
-
-class VoitingPage extends PureComponent{
+class VoitingPage extends PureComponent {
     constructor(props) {
         super(props);
         this.state = {
@@ -55,24 +18,106 @@ class VoitingPage extends PureComponent{
             secondNomination: '',
             secondNominationMessage: '',
             thirdNomination: '',
-            thirdNominationMessage: ''
+            thirdNominationMessage: '',
+            errorMessageYourself: false,
+            errorMessageUnique: false,
+            errorMessageSelectName: false,
+            errorMessageEmpty: false,
+            errorVoterPerson: false
+
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleClick = this.handleClick.bind(this);
     }
 
+    componentDidMount() {
+        this.checkVotedPersons();
+    }
+
+    getVoters() {
+        let storage = [];
+        for (let i = 0; i < this.props.items.length; i++) {
+            storage.push(this.props.items[i]);
+        }
+        let voters = [];
+        for (let person in storage) {
+            voters.push(storage[person].voterPerson)
+        }
+        return voters;
+    }
+
+    checkVotedPersons() {
+        let voters = this.getVoters();
+        if (voters.indexOf(this.state.voterPerson) >= 0) {
+            this.setState({ errorVoterPerson: true })
+        }
+    }
+
     handleClick(event) {
         event.preventDefault();
-        // this.setState({ [event.target.name]: event.target.value });
-        let votesData = { ...this.state };
-        localStorage.setItem(this.state.voterPerson, JSON.stringify(votesData))
-        const { history } = this.props;
-        history.push('/thanks');
+        let voters = this.getVoters();
+        if (this.state.firstNomination === '' ||
+            this.state.secondNomination === '' ||
+            this.state.thirdNomination === '') {
+            this.setState({ errorMessageSelectName: true })
+            setTimeout(() => {
+                this.setState({ errorMessageSelectName: false })
+            }, 3000);
+        } else if (this.state.voterPerson === this.state.firstNomination ||
+            this.state.voterPerson === this.state.secondNomination ||
+            this.state.voterPerson === this.state.thirdNomination) {
+            this.setState({ errorMessageYourself: true })
+            setTimeout(() => {
+                this.setState({ errorMessageYourself: false })
+            }, 3000);
+        } else if (this.state.firstNomination === this.state.secondNomination ||
+            this.state.firstNomination === this.state.thirdNomination ||
+            this.state.secondNomination === this.state.thirdNomination) {
+            this.setState({ errorMessageUnique: true })
+            setTimeout(() => {
+                this.setState({ errorMessageUnique: false })
+            }, 3000);
+        } else if (this.state.firstNominationMessage === '' ||
+            this.state.secondNominationMessage === '' ||
+            this.state.thirdNominationMessage === '') {
+            this.setState({ errorMessageEmpty: true })
+            setTimeout(() => {
+                this.setState({ errorMessageEmpty: false })
+            }, 3000);
+        } else if (voters.indexOf(this.state.voterPerson) >= 0) {
+            this.setState({ errorVoterPerson: true })
+            setTimeout(() => {
+                this.setState({ errorVoterPerson: false })
+            }, 3000);
+        } else {
+            const { voterPerson,
+                firstNomination,
+                firstNominationMessage,
+                secondNomination,
+                secondNominationMessage,
+                thirdNomination,
+                thirdNominationMessage } = this.state;
+            let votesData = {
+                voterPerson,
+                firstNomination,
+                firstNominationMessage,
+                secondNomination,
+                secondNominationMessage,
+                thirdNomination,
+                thirdNominationMessage
+            };
+            this.props.dispatch({
+                type: "ADD_NOMINATION",
+                votesData: votesData
+            });
+            const { history } = this.props;
+            history.push('/thanks');
+        }
     }
+
 
     handleChange(event) {
         this.setState({ [event.target.name]: event.target.value });
-        // console.log(this.state, 'state')
     }
 
     render() {
@@ -80,6 +125,18 @@ class VoitingPage extends PureComponent{
         return (
             <div className='container'>
                 <form className='form'>
+                    <div className='row errorMsg'>
+                        {this.state.errorMessageYourself && <div className='col-md-12 text-center error'>
+                            Sorry you can not vote for yourself</div>}
+                        {this.state.errorMessageUnique && <div className='col-md-12 text-center error'>
+                            Sorry you can not vote for the same person more than once</div>}
+                        {this.state.errorMessageSelectName && <div className='col-md-12 text-center error'>
+                            Sorry you should choose someone</div>}
+                        {this.state.errorMessageEmpty && <div className='col-md-12 text-center error'>
+                            Sorry you should fill in the message fields</div>}
+                        {this.state.errorVoterPerson && <div className='col-md-12 text-center error'>
+                            Sorry you already had voted</div>}
+                    </div>
                     <div className="form-group row">
                         <label className="col-md-5 text-right ">You are:</label>
                         <div className="col-md-4">
@@ -150,5 +207,9 @@ class VoitingPage extends PureComponent{
     }
 }
 
+const mapStateToProps = (state) => {
+    return { items: state };
+}
 
-export default withRouter(VoitingPage);
+// export default withRouter(VoitingPage);
+export default connect(mapStateToProps)(VoitingPage);

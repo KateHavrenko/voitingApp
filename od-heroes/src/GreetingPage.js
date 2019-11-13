@@ -1,16 +1,11 @@
 import React, { Component } from 'react';
-import './Greetingpage.css'
-import castle from './castle.png';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { fab } from '@fortawesome/free-brands-svg-icons'
-import { faCheckSquare, faCoffee, faArrowCircleRight } from '@fortawesome/free-solid-svg-icons'
+import { faArrowCircleRight } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { BrowserRouter as Router, Route, Link, Redirect, Switch } from "react-router-dom";
-import VotingPage from './VotingPage';
-import AdminPage from './AdminPage';
+import { BrowserRouter as Router, Link} from "react-router-dom";
 
-
-library.add(fab, faCheckSquare, faCoffee, faArrowCircleRight)
+library.add(fab, faArrowCircleRight)
 
 export default class GreetingPage extends Component {
     constructor(props) {
@@ -34,7 +29,7 @@ export default class GreetingPage extends Component {
                         <li>Smashing to a target</li>
                     </ul>
                     <p>We aim to have a Hero for each office, however you can use your votes to
-                        nominate someone from eiher office.
+                        nominate someone from either office.
                         </p>
                     <div className='text-center'>
                         <Link to='/voting'>
@@ -46,7 +41,7 @@ export default class GreetingPage extends Component {
                     </div>
                 </div>
                 <p>Or you can see result of voting if you have the access.</p>
-                <Link to='/admin'><p className='text-center'>Click here</p></Link>
+                <Link to='/admin-access'><p className='text-center'>Click here</p></Link>
             </div>
         )
     }

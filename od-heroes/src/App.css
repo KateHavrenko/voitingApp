@@ -3,6 +3,32 @@
   margin: 15px;
 }
 
+.nameWinner {
+  color: red;
+  font-size: 20px;
+  font-weight: bolder;
+}
+
+.isHero {
+  font-weight: bold;
+  font-size: 22px;
+}
+
+.winnerMsg {
+  max-width: 300px;
+  width: 100%;
+  margin: 10px auto;
+}
+
+.winnerMsg .msg {
+  border: 1px solid black;
+}
+
+.winnerMsg .writer {
+  text-align: right;
+  font-weight: bold;
+}
+
 .logo img{
   width: 100px;
 }
@@ -19,3 +45,56 @@
   margin-top: 10px;
 }
 
+.error {
+  color: red;
+  transition: all;
+}
+
+.errorMsg {
+  height: 30px;
+}
+
+.information {
+  display: inline-block;
+  text-align: left;
+  max-width: 500px;
+  width: 100%;
+  border: 1px solid black;
+  padding: 15px;
+}
+
+.information svg.svg-inline--fa {
+  padding-right: 5px;
+  width: 2em;
+}
+
+.winners img {
+  width: 100px;
+}
+
+.winners .winner {
+  max-width: 300px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.winner .message p {
+  padding: 5px 10px;
+}
+
+.winner .message p:nth-child(odd) {
+  border-left: 1px solid;
+  border-right: 1px solid;
+  border-top: 1px solid;
+  margin-bottom: 0;
+  text-align: left;
+  font-style: italic;
+}
+
+.winner .message p:nth-child(even) {
+  border-left: 1px solid;
+  border-right: 1px solid;
+  border-bottom: 1px solid;
+  text-align: right;
+  font-weight: bold;
+}
