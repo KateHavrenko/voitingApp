@@ -24,17 +24,7 @@ class ResultsPage extends Component {
     getListOfPeople(list) {
         return list.map(person => person.name);
     }
-
-    // updateStateFunction(){
-    //     const [londonNom, kyivNom] = this.findNominants();
-    //     this.setState({ winPersonKyiv: this.getWinner(kyivNom) });
-    //     this.setState({ winPersonLondon: this.getWinner(londonNom) });
-    //     let winnerLondon = this.getWinner(londonNom);
-    //     let winnerKyiv = this.getWinner(kyivNom);
-    //     this.setState({ winnerLondon: winnerLondon });
-    //     this.setState({ winnerKyiv: winnerKyiv });
-    // }
-
+    
     componentDidMount() {
         const [londonNom, kyivNom] = this.findNominants();
         this.setState({ winPersonKyiv: this.getWinner(kyivNom) });
@@ -100,7 +90,6 @@ class ResultsPage extends Component {
     }
 
     collectWinnerObject(winners) {
-        debugger;
         let storage = [];
         let msgInfo = [];
         let winnerInfo = {};
