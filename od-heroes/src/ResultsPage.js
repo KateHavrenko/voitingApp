@@ -43,20 +43,6 @@ class ResultsPage extends Component {
         let winnerKyiv = this.getWinner(kyivNom);
         this.setState({ winnerLondon: winnerLondon });
         this.setState({ winnerKyiv: winnerKyiv });
-       
-     
-        // const [londonNom, kyivNom] = this.findNominants();
-        // this.setState({ winPersonKyiv: this.getWinner(kyivNom) });
-        // this.setState({ winPersonLondon: this.getWinner(londonNom) });
-        // let winnerLondon = this.getWinner(londonNom);
-        // let winnerKyiv = this.getWinner(kyivNom);
-
-        // this.setState({ winLondon: this.renderWinner(winnerLondon) });
-        // this.setState({ winKyiv: this.renderWinner(winnerKyiv) });
-        // this.setState(winKyiv => {return {winKyiv: this.renderWinner(winnerKyiv) }});
-        
-        // this.setState({ winMsgWritersLondon: this.findWinnerMessagesWriter(winnerLondon) });
-        // this.setState({ winMsgWritersKyiv: this.findWinnerMessagesWriter(winnerKyiv) });
     }
 
     getNominations() {
@@ -137,13 +123,11 @@ class ResultsPage extends Component {
             }
             msgInfo = [];
         }
-        console.log('storageMessage', winnerInfo);
         return winnerInfo;
     }
 
 
     render() {
-        console.log('winKyivP', this.state.winnerKyiv)
         let winnerInfoKyiv = this.collectWinnerObject(this.state.winnerKyiv);
         let winnerInfoLondon = this.collectWinnerObject(this.state.winnerLondon);
         return (
