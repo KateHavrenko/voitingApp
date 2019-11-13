@@ -1,0 +1,68 @@
+.App {
+  text-align: center;
+  margin: 15px;
+}
+
+.nameWinner {
+  color: red;
+  font-size: 24px;
+}
+
+.isHero {
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.winnerMsg {
+  max-width: 300px;
+  width: 100%;
+  margin: 10px auto;
+}
+
+.winnerMsg .msg {
+  border: 1px solid black;
+}
+
+.winnerMsg .writer {
+  text-align: right;
+  font-weight: bold;
+}
+
+.logo img{
+  width: 100px;
+}
+
+.thanksMessage {
+  display: inline-block;
+  max-width: 500px;
+  width: 100%;
+  border: 1px solid black;
+}
+
+.submitVotes,
+.seeResult {
+  margin-top: 10px;
+}
+
+.error {
+  color: red;
+  transition: all;
+}
+
+.errorMsg {
+  height: 30px;
+}
+
+.information {
+  display: inline-block;
+  text-align: left;
+  max-width: 500px;
+  width: 100%;
+  border: 1px solid black;
+  padding: 15px;
+}
+
+.information svg.svg-inline--fa {
+  padding-right: 5px;
+  width: 2em;
+}
